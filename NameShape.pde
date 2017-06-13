@@ -9,42 +9,41 @@ void setup(){
 }
 
 int count = 0;
-// int bollNowX = (int)random(bollSize/2, width-bollSize/2);
 int bollNowX = 0;
 int bollNowY = 0;
 
 void draw(){
+  loop();
   back();
   for(int i=0;i<count;i++){
     ellipse(bollX[i], bollY[i], bollSize, bollSize);
   }
   
-  bollNowX += random(0, 10);
-  // bollNowX = 0;
+  bollNowX += (int)random(0, 5);
   bollNowY += 5;
   ellipse(bollNowX, bollNowY, bollSize, bollSize);
   
   boolean flag = true;
 
-  for(int i=0;i<count;i++){
-    // println( bollNowX +","+ bollNowY +","+ bollX[i] +","+ bollY[i]);
-    if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) <= bollSize ){
+  for(int i=0;i<count && count!=0;i++){
+    if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) <= bollSize  ){
       println("true");
       flag = false;
+      noLoop();
       break;
     }
   }
 
   print("\n");
   
-  if( bollNowY >= height && flag ){
+  if( bollNowY >= height-bollSize/2 && flag ){
     bollX[count] = bollNowX;
     bollY[count] = bollNowY - bollSize/2;
     count++;
     
-    bollNowX = (int)random(bollSize/2, width-bollSize/2);
-    // bollNowX = 0;
+    bollNowX = (int)random(0, 5);;
     bollNowY = 0;
+    
   }
   
   delay(10);
