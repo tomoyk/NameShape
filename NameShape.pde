@@ -1,63 +1,71 @@
-// ボールの最終位置を定義する配列
-int[] bollX = new int[100];
-int[] bollY = new int[100];
-int bollSize = 80; // ボールの直径
+
+int[] bollX = new int[100]; // ボールの静止位置(x座標)を保存する配列
+int[] bollY = new int[100]; // ボールの静止位置(y座標)を保存する配列
+int bollSize = 50; // ボールの直径
 
 void setup(){
-  size(800, 600);
-  back();
+  size(800, 600); // ウィンドウサイズ設定
+  back(); // 背景を設定
 }
 
 int count = 0;
-int bollNowX = 0;
-int bollNowY = 0;
+int bollNowX = 800/2; // 移動中ボールのx座標
+int bollNowY = 0; // 移動中ボールのy座標
 
 void draw(){
-  loop();
+  
   back();
+  
+  // 静止ボールの描画
   for(int i=0;i<count;i++){
     ellipse(bollX[i], bollY[i], bollSize, bollSize);
   }
   
-  bollNowX += (int)random(0, 5);
-  bollNowY += 5;
+  // ボールの位置を変化させて描画
+  bollNowX += (int)random(-40, 40);
+  bollNowY += 10;
   ellipse(bollNowX, bollNowY, bollSize, bollSize);
   
-  boolean flag = true;
+  // ボールが地面(底面)に触れたとき
+  if( bollNowY >= height-bollSize/2 ){
+    bollHit();
+  }
 
-  for(int i=0;i<count && count!=0;i++){
+  // 他のボールと触れたかチェック
+  for(int i=0;i<count;i++){
     if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) <= bollSize  ){
-      println("true");
-      flag = false;
-      noLoop();
+      if(bollNowY < bollSize/2){
+        noLoop();
+      }
+
+      println("Hit");
+      bollHit();
       break;
+      
     }
   }
 
-  print("\n");
-  
-  if( bollNowY >= height-bollSize/2 && flag ){
-    bollX[count] = bollNowX;
-    bollY[count] = bollNowY - bollSize/2;
-    count++;
-    
-    bollNowX = (int)random(0, 5);;
-    bollNowY = 0;
-    
-  }
-  
-  delay(10);
+  // delay(10);
 }
 
-color c = #e6e6fa;
-
+// 背景
 void back(){
+  color c = #e6e6fa;
   background(red(c), green(c), blue(c));
 }
 
+// 2点の距離を求める
 int distance(int x1, int y1, int x2, int y2){
   int xDiff = x1>x2 ? x1-x2 : x2-x1;
   int yDiff = y1>y2 ? y1-y2 : y2-y1;
-  
   return (int)sqrt( sq(xDiff) + sq(yDiff) );
+}
+
+// ボールが他の物体に衝突
+void bollHit(){
+  bollX[count] = bollNowX;
+  bollY[count] = bollNowY;
+  count++;
+  bollNowX = 800/2;
+  bollNowY = 0;
 }
