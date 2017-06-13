@@ -14,7 +14,7 @@ int bollNowY = 0; // 移動中ボールのy座標
 
 void draw(){
   
-  back();
+  back(); // 背景を設定
   
   // 静止ボールの描画
   for(int i=0;i<count;i++){
@@ -38,7 +38,7 @@ void draw(){
   // 他のボールと触れたかチェック
   for(int i=0;i<count;i++){
     if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) <= bollSize  ){
-      if(bollNowY < bollSize/2){
+      if(bollNowY < bollSize/2){ // ボールが積み上がってウィンドウはみ出たら
         noLoop();
       }
 
@@ -49,7 +49,7 @@ void draw(){
     }
   }
 
-  // delay(10);
+  delay(10);
 }
 
 // 背景
