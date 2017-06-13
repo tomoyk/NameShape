@@ -22,12 +22,16 @@ void draw(){
   }
   
   // ボールの位置を変化させて描画
-  bollNowX += (int)random(-40, 40);
+  bollNowX += (int)random(-10, 10);
   bollNowY += 10;
   ellipse(bollNowX, bollNowY, bollSize, bollSize);
   
-  // ボールが地面(底面)に触れたとき
-  if( bollNowY >= height-bollSize/2 ){
+  // ボールの当たり判定
+  if( bollNowY >= height-bollSize/2 ){ // 底面の当たり判定
+    bollHit();
+  }else if( width-bollSize/2 <= bollNowX ){ // 右壁の当たり判定
+    bollHit();
+  }else if( bollNowX <= 0+bollSize/2 ){ // 左壁の当たり判定
     bollHit();
   }
 
@@ -66,6 +70,6 @@ void bollHit(){
   bollX[count] = bollNowX;
   bollY[count] = bollNowY;
   count++;
-  bollNowX = 800/2;
+  bollNowX = 800/2 + (int)random(-300, 300);
   bollNowY = 0;
 }
