@@ -26,7 +26,7 @@ void draw(){
   bollNowY += 10;
   ellipse(bollNowX, bollNowY, bollSize, bollSize);
   
-  // ボールの当たり判定
+  // ボールと壁の当たり判定
   if( bollNowY >= height-bollSize/2 ){ // 底面の当たり判定
     bollHit();
   }else if( width-bollSize/2 <= bollNowX ){ // 右壁の当たり判定
@@ -35,13 +35,17 @@ void draw(){
     bollHit();
   }
 
-  // 他のボールと触れたかチェック
+  // 他のボールとの当たり判定
   for(int i=0;i<count;i++){
     if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) <= bollSize  ){
       if(bollNowY < bollSize/2){ // ボールが積み上がってウィンドウはみ出たら
         noLoop();
       }
 
+      // 2点目が触れるまで動かす処理
+      // handle
+  
+      // ボールの移動を停止
       println("Hit");
       bollHit();
       break;
