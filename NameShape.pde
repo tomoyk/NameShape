@@ -5,7 +5,7 @@ int bollSize = 50; // ボールの直径
 
 void setup(){
   size(800, 600); // ウィンドウサイズ設定
-  back(); // 背景を設定
+  setBack(); // 背景を設定
 }
 
 int count = 0;
@@ -14,7 +14,7 @@ int bollNowY = 0; // 移動中ボールのy座標
 
 void draw(){
   
-  back(); // 背景を設定
+  setBack(); // 背景を設定
   
   // 静止ボールの描画
   for(int i=0;i<count;i++){
@@ -35,29 +35,36 @@ void draw(){
     bollHit();
   }
 
+  // 当たった回数をカウント
+  int hitCounter = 0;
+
   // 他のボールとの当たり判定
   for(int i=0;i<count;i++){
-    if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) <= bollSize  ){
+    if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) <= bollSize  ){ // ボールがi番目のボールと触れた時
+      
       if(bollNowY < bollSize/2){ // ボールが積み上がってウィンドウはみ出たら
         noLoop();
       }
-
-      // 2点目が触れるまで動かす処理
-      // handle
-  
-      // ボールの移動を停止
-      println("Hit");
-      bollHit();
-      break;
+      
+      hitCounter++;
+      
+      if(hitCounter >= 2){ // 他のボールと2点以上が触れた時
+        println("Hit");
+        bollHit();
+        break;
+      }
       
     }
   }
+  
+  // ボールをi番目ボール中心に回転させてぶつかったら終了ってループ
+  
 
   delay(10);
 }
 
 // 背景
-void back(){
+void setBack(){
   color c = #e6e6fa;
   background(red(c), green(c), blue(c));
 }
