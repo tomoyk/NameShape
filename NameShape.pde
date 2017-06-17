@@ -22,16 +22,20 @@ void draw(){
   }
   
   // ボールの位置を変化させて描画
-  bollNowX += (int)random(-10, 10);
-  bollNowY += 10;
+  // bollNowX += (int)random(-10, 10);
+  bollNowX += 0;
+  bollNowY += 5;
   ellipse(bollNowX, bollNowY, bollSize, bollSize);
   
   // ボールと壁の当たり判定
   if( bollNowY >= height-bollSize/2 ){ // 底面の当たり判定
+    println("Bottom Hit");
     bollHit();
   }else if( width-bollSize/2 <= bollNowX ){ // 右壁の当たり判定
+    println("Right Hit");
     bollHit();
   }else if( bollNowX <= 0+bollSize/2 ){ // 左壁の当たり判定
+    println("Left Hit");
     bollHit();
   }
 
@@ -48,6 +52,11 @@ void draw(){
       
       hitCounter++;
       
+      if(hitCounter == 1){
+        // 移動を停止
+        // i番目を中心として回転
+      }
+      
       if(hitCounter >= 2){ // 他のボールと2点以上が触れた時
         println("Hit");
         bollHit();
@@ -58,7 +67,6 @@ void draw(){
   }
   
   // ボールをi番目ボール中心に回転させてぶつかったら終了ってループ
-  
 
   delay(10);
 }
