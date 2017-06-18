@@ -4,12 +4,12 @@ int[] bollY = new int[1000]; // ボールの静止位置(y座標)を保存する
 int bollSize = 50; // ボールの直径
 
 void setup(){
-  size(800, 310); // ウィンドウサイズ設定
+  size(1000, 310); // ウィンドウサイズ設定
   setBack(); // 背景を設定
   frameRate(120);
 }
 
-int wid=800, hei=310;
+int wid=1000, hei=310;
 
 int count = 0;
 int bollNowX = bollSize/2; // 移動中ボールのx座標
@@ -56,25 +56,54 @@ void draw(){
       hitCounter++;
       
       if(hitCounter == 1){
-        // 移動を停止
-        // i番目を中心として回転
         
-        float sideX = bollNowX > bollX[i] ? bollNowX - bollX[i] : bollX[i] - bollNowX;
-        float sideY = bollNowY > bollY[i] ? bollNowY - bollY[i] : bollY[i] - bollNowY;
-        float rad = atan( sideY / sideX );
-        // println(rad);
-/*
-        for(int j=0;;i+=){
-          bollNowX += 0;
-          bollNowY += 5;
+        // 上の円の中心を計算
+        float posX = bollNowX;
+        float posY = bollNowY;
+
+        // 下の円の中心を計算
+        int pX = bollX[i];
+        int pY = bollY[i];
+
+        // 右回転を左回転を判定(右回り : 左回り)
+        int mode = ((int)posX >= pX ? -1 : 1);
+        float rad;
+
+        while(true){
+          
+          // println("(pX, pY)=" + pX + ", " + pY );
+          // delay(1000);
+
+          // 二つの円の距離
+          float xDiff = pX>posX ? pX-posX : posX-pX;
+          float yDiff = pY>posY ? pY-posY : posY-pY;
+          // println("(xDiff, yDiff)=" + xDiff + ", " + yDiff );
+          
+          // 動く玉と中心になる玉との角度とって radian を -0.05 する
+          rad = atan( yDiff / xDiff ) - 0.05; // ここ向き:
+          // println("rad: " + rad);
+
+          // 動く玉の位置を再定義(**)
+          posX = (int)( pX - mode * bollSize * cos(rad) ); // ***
+          posY = (int)( pY - bollSize * sin(rad) );
+          // println("(posX, posY)=" + posX + ", " + posY );
+          
+          // 玉が地面に達したら終了(**上に入れるかタイミングは要調整)
+          if(posY >= pY){
+            // noLoop();
+            break;
+            // println("Over line");
+          }
+
+          // オブジェクトを描画
+          //ellipse((int)posX, (int)posY, bollSize, bollSize); // 上の円
+          // ellipse(pX, pY, bollSize, bollSize); // 下の円
+          bollNowX = (int)posX;
+          bollNowY = (int)posY;
+          
+          // delay(500);
         }
-  */
-        println("Hit");
-        bollHit();
-        break;
-      }
-      
-      if(hitCounter >= 2){ // 他のボールと2点以上が触れた時
+        
         println("Hit");
         bollHit();
         break;
@@ -117,7 +146,7 @@ void bollHit(){
     center++;
   }
   
-  
-  bollNowX = ((center/widBollMax)%2==0 ? bollSize/2 : bollSize) + (center%widBollMax) * bollSize;
+  // bollNowX = ((center/widBollMax)%2==0 ? bollSize/2 : bollSize) + (center%widBollMax) * bollSize;
+  bollNowX = bollSize/2 + (center%widBollMax) * bollSize;
   bollNowY = 0;
 }
