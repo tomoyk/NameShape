@@ -2,15 +2,15 @@
 int bollSize = 100;
 
 // 上の円の中心を計算
-int posX = 200;
-int posY = 200;
+float posX = 200;
+float posY = 200;
 
 // 下の円の中心を計算
-float pX = posX + bollSize/2;
-float pY = posY + bollSize*(1.73/2);
+int pX = (int)posX - bollSize/2;
+int pY = (int)(posY + bollSize*(1.73/2));
 
 // 右回転を左回転を判定(右回り : 左回り)
-int mode = (posX >= (int)pX ? 1 : -1);
+int mode = ((int)posX >= pX ? -1 : 1);
 float rad;
 
 void setup(){
@@ -19,6 +19,9 @@ void setup(){
 
 void draw(){
   
+  println("(pX, pY)=" + pX + ", " + pY );
+  delay(1000);
+
   // 二つの円の距離
   float xDiff = pX>posX ? pX-posX : posX-pX;
   float yDiff = pY>posY ? pY-posY : posY-pY;
@@ -29,7 +32,7 @@ void draw(){
   println("rad: " + rad);
 
   // 動く玉の位置を再定義(**)
-  posX = (int)( pX - bollSize * cos(rad) );
+  posX = (int)( pX - mode * bollSize * cos(rad) ); // ***
   posY = (int)( pY - bollSize * sin(rad) );
   println("(posX, posY)=" + posX + ", " + posY );
   
