@@ -6,7 +6,7 @@ float posX = 200;
 float posY = 200;
 
 // 下の円の中心を計算
-int pX = (int)posX - bollSize/2;
+int pX = (int)posX + bollSize/2;
 int pY = (int)(posY + bollSize*(1.73/2));
 
 // 右回転を左回転を判定(右回り : 左回り)
@@ -20,7 +20,7 @@ void setup(){
 void draw(){
   
   println("(pX, pY)=" + pX + ", " + pY );
-  delay(1000);
+  // delay(1000);
 
   // 二つの円の距離
   float xDiff = pX>posX ? pX-posX : posX-pX;
@@ -28,7 +28,7 @@ void draw(){
   println("(xDiff, yDiff)=" + xDiff + ", " + yDiff );
   
   // 動く玉と中心になる玉との角度とって radian を -0.05 する
-  rad = atan( yDiff / xDiff ) + mode * 0.05; // ここ向き:
+  rad = atan( yDiff / xDiff ) - 0.05; // ここ向き:
   println("rad: " + rad);
 
   // 動く玉の位置を再定義(**)
@@ -38,7 +38,7 @@ void draw(){
   
   // 玉が地面に達したら終了(**上に入れるかタイミングは要調整)
   if(posY >= pY){
-    //noLoop();
+    noLoop();
     println("Over line");
   }
 
@@ -47,5 +47,5 @@ void draw(){
   ellipse(pX, pY, bollSize, bollSize); // 下の円
   line(0, pY+50, width, pY+50); // ライン
 
-  //delay(500);
+  // delay(500);
 }
