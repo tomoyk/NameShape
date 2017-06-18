@@ -1,15 +1,15 @@
 
-int[] bollX = new int[100]; // ボールの静止位置(x座標)を保存する配列
-int[] bollY = new int[100]; // ボールの静止位置(y座標)を保存する配列
+int[] bollX = new int[1000]; // ボールの静止位置(x座標)を保存する配列
+int[] bollY = new int[1000]; // ボールの静止位置(y座標)を保存する配列
 int bollSize = 50; // ボールの直径
 
 void setup(){
-  size(600, 310); // ウィンドウサイズ設定
+  size(800, 310); // ウィンドウサイズ設定
   setBack(); // 背景を設定
   frameRate(120);
 }
 
-int wid=600, hei=310;
+int wid=800, hei=310;
 
 int count = 0;
 int bollNowX = bollSize/2; // 移動中ボールのx座標
@@ -61,8 +61,8 @@ void draw(){
         
         float sideX = bollNowX > bollX[i] ? bollNowX - bollX[i] : bollX[i] - bollNowX;
         float sideY = bollNowY > bollY[i] ? bollNowY - bollY[i] : bollY[i] - bollNowY;
-        float rad = atan( sideX / sideY );
-        println(rad);
+        float rad = atan( sideY / sideX );
+        // println(rad);
 /*
         for(int j=0;;i+=){
           bollNowX += 0;
