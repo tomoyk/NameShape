@@ -55,6 +55,19 @@ void draw(){
       if(hitCounter == 1){
         // 移動を停止
         // i番目を中心として回転
+        
+        float sideX = bollNowX > bollX[i] ? bollNowX - bollX[i] : bollX[i] - bollNowX;
+        float sideY = bollNowY > bollY[i] ? bollNowY - bollY[i] : bollY[i] - bollNowY;
+        float rad = atan( sideX / sideY );
+/*
+        for(int j=0;;i+=){
+          bollNowX += 0;
+          bollNowY += 5;
+        }
+  */      
+        println("Hit");
+        bollHit();
+        break;
       }
       
       if(hitCounter >= 2){ // 他のボールと2点以上が触れた時
