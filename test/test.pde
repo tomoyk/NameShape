@@ -2,28 +2,36 @@ void setup(){
   size(500, 500);
 }
 
+// 上の円の中心を計算
 float posX = 200;
 float posY = 200;
-int r = 100;
-int p = 200+(int)(100/1.41);
+
+// 下の円の中心を計算
+int pX = 200+(int)(100/2);
+int pY = 200+(int)(100*(1.73/2));
+
+// arcTanを計算
 float rad = atan( posY / posX );
+
+int r = 100;
 
 void draw(){
   ellipse((int)posX, (int)posY, 100, 100); // 上の円
-  ellipse(p, p, 100, 100); // 下の円
-  line(0, p+50, width, p+50); // ライン
+  ellipse(pX, pY, 100, 100); // 下の円
+  line(0, pY+50, width, pY+50); // ライン
   
-  rad = atan( (p-posY) / (p-posX) );
+  rad = atan( (pY-posY) / (pX-posX) ) - 0.1;
   println("rad: " + rad);
-  
-  // posX = (int)(p - r * sin(rad));
-  // posY = (int)(p + r * cos(rad));
-  posX = p - r * sin(rad);
-  posY = p - r * cos(rad);
+    
+  posX = pX - r * cos(rad);
+  posY = pY - r * sin(rad);
+
+  //posX = pX - r * sin(rad);
+  //posY = pY - r * cos(rad);
   
   println("(posX, posY)=" + posX + ", " + posY );
   
-  delay(1000);
+  delay(500);
 }
 
 int distance(int x1, int y1, int x2, int y2){
