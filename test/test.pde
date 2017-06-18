@@ -1,41 +1,39 @@
+// ボールの直径を定義
+int bollSize = 100;
+
+// 上の円の中心を計算
+int posX = 200;
+int posY = 200;
+
+// 下の円の中心を計算
+float pX = posX+bollSize/2;
+float pY = posY+bollSize*(1.73/2);
+
+// arcTanを計算
+float rad = 0.0;
+
 void setup(){
   size(500, 500);
 }
 
-// 上の円の中心を計算
-float posX = 200;
-float posY = 200;
-
-// 下の円の中心を計算
-int pX = 200+(int)(100/2);
-int pY = 200+(int)(100*(1.73/2));
-
-// arcTanを計算
-float rad = atan( posY / posX );
-
-int r = 100;
-
 void draw(){
-  ellipse((int)posX, (int)posY, 100, 100); // 上の円
-  ellipse(pX, pY, 100, 100); // 下の円
+  ellipse((int)posX, (int)posY, bollSize, bollSize); // 上の円
+  ellipse(pX, pY, bollSize, bollSize); // 下の円
   line(0, pY+50, width, pY+50); // ライン
   
-  rad = atan( (pY-posY) / (pX-posX) ) - 0.1;
+  // 動く玉と中心になる玉との角度とって radian を -0.05 する
+  rad = atan( (pY-posY) / (pX-posX) ) - 0.05;
   println("rad: " + rad);
-    
-  posX = pX - r * cos(rad);
-  posY = pY - r * sin(rad);
 
-  //posX = pX - r * sin(rad);
-  //posY = pY - r * cos(rad);
-  
+  // 動く玉の位置を再定義(**)
+  posX = (int)( pX - bollSize * cos(rad) );
+  posY = (int)( pY - bollSize * sin(rad) );
   println("(posX, posY)=" + posX + ", " + posY );
   
-  delay(500);
-}
+  // 玉が地面に達したら終了(**上に入れるかタイミングは要調整)
+  if(posY >= pY){
+    noLoop();
+  }
 
-int distance(int x1, int y1, int x2, int y2){
-  int xDiff = x1>x2 ? x1-x2 : x2-x1;
-  int yDiff = y1>y2 ? y1-y2 : y2-y1;
-  return (int)sqrt( sq(xDiff) + sq(yDiff) );
+  delay(500);
 }
