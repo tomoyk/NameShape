@@ -105,20 +105,26 @@ void draw(){
         println("rad: " + rad);
 
         // 動く玉の位置を再定義(**)
-        posX = (int)( pX - mode * bollSize * cos(rad) ); // ***
+        posX = (int)( pX - mode * bollSize * cos(rad) );
         posY = (int)( pY - bollSize * sin(rad) );
         println("(posX, posY)=" + posX + ", " + posY );
         
+        boolean state = false;
+          
+        for(int j=0;j<count;j++){
+          if( distance((int)posX, (int)posY, bollX[j], bollY[j]) < bollSize  ){ // ボールがi番目のボールと触れた時
+            state = true;
+          }
+        }
+
         // 玉が地面に達したら終了(**上に入れるかタイミングは要調整)
-        if( (posX > pX+0.05 && mode==1) || (posX < pX+0.05 && mode==-1)  ){
+        if( state ){
           println("Over line");
           break;
         }
 
         // オブジェクトを描画
-        ellipse((int)posX, (int)posY, bollSize, bollSize); // 上の円
-        ellipse(pX, pY, bollSize, bollSize); // 下の円
-        line(0, pY+50, width, pY+50); // ライン
+        ellipse(bollNowX, bollNowY, bollSize, bollSize);
 
         // delay(500);
       }
@@ -162,7 +168,7 @@ void bollHit(){
     center++;
   }
   
-  bollNowX = ((center/widBollMax)%2==0 ? bollSize/2 : bollSize) + (center%widBollMax) * bollSize;
-  // bollNowX = bollSize/2 + (center%widBollMax) * bollSize;
+  // bollNowX = ((center/widBollMax)%2==0 ? bollSize/2 : bollSize) + (center%widBollMax) * bollSize;
+  bollNowX = bollSize/2 + (center%widBollMax) * bollSize;
   bollNowY = 0;
 }
