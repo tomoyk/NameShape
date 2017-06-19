@@ -3,7 +3,7 @@ int[] bollY = new int[1000]; // ボールの静止位置(y座標)を保存する
 int[] boolLabel = new int[1000]; // ボールの番号を描画
 int bollSize = 50; // ボールの直径
 
-boolean debug = true;
+boolean debug = false;
 
 void setup(){
   size(1000, 400); // ウィンドウサイズ設定
@@ -21,16 +21,63 @@ void draw(){
   
   // 静止ボールの描画
   for(int i=0;i<bollCount;i++){
+    
+    switch(i){
+      case 118:
+      case 99:
+      case 100:
+      case 101:
+      case 102:
+      case 82:
+      case 62:
+      case 42:
+      case 41:
+      case 40:
+      case 59:
+        fill(255,(int)random(100),0);
+        break;
+      case 124:
+      case 104:
+      case 105:
+      case 106:
+      case 107:
+      case 108:
+      case 109:
+      case 86:
+      case 89:
+      case 67:
+      case 48:
+        fill(0,255,(int)random(100));
+        break;
+      case 111:
+      case 112:
+      case 113:
+      case 114:
+      case 115:
+      case 116:
+      case 95:
+      case 75:
+      case 74:
+      case 55:
+        fill((int)random(100),0,255);
+        break;
+      default:
+        fill(255);
+        break;
+    }
+    
     if(!debug) {
       ellipse(bollX[i], bollY[i], bollSize, bollSize);
     }else{
       drawBoll(bollX[i], bollY[i], bollSize, i);
     }
+    
+    fill(255);
   }
   
   // ボールの位置を変化させて描画
   bollNowX += 0;
-  bollNowY += 5;
+  bollNowY += 7;
   ellipse(bollNowX, bollNowY, bollSize, bollSize);
   
   // ボールと壁の当たり判定
@@ -51,7 +98,7 @@ void draw(){
   // 他のボールとの当たり判定
   for(int i=0;i<bollCount;i++){
     
-    if(bollY[i] < bollSize/2 - 10){ // ボールが積み上がってウィンドウはみ出たら
+    if(bollY[i] < bollSize/2 ){ // ボールが積み上がってウィンドウはみ出たら
       noLoop();
       if(debug) println("End");
       break;
