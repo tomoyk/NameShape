@@ -22,24 +22,24 @@ void draw(){
   
   // 静止ボールの描画
   for(int i=0;i<bollCount;i++){
+    stroke(255);
+    strokeWeight(3);
+    
     switch(i){
       case 118: case 99: case 100: case 101:
       case 102: case 82: case 62:  case 42:
       case 41:  case 40: case 59:
-        stroke(255, 0, 0);
-        fill(255,0,0);
+        fill(120,120,0);
         break;
       case 124: case 104: case 105: case 106:
       case 107: case 108: case 109: case 86:
       case 89:  case 67:  case 48:
-        stroke(0, 255, 0);
-        fill(0,255,0);
+        fill(120,0,0);
         break;
       case 111: case 112: case 113: case 114:
       case 115: case 116: case 95:  case 75:
       case 74:  case 55:
-        stroke(0, 0, 255);
-        fill(0,0,255);
+        fill(0,120,120);
         break;
       default:
         noStroke();
