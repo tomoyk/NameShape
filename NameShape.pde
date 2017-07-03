@@ -2,12 +2,13 @@ int[] bollX = new int[200]; // ボールの静止位置(x座標)を保存する�
 int[] bollY = new int[200]; // ボールの静止位置(y座標)を保存する配列
 int bollSize = 50; // ボールの直径
 
-boolean debug = true;
+boolean debug = false;
 
 void setup(){
   size(1000, 400); // ウィンドウサイズ設定
   setBack(); // 背景を設定
   frameRate(1200);
+  noStroke();
 }
 
 int bollCount = 0; // 描画した静止しているボール数
@@ -19,7 +20,6 @@ void draw(){
   
   // 静止ボールの描画
   for(int i=0;i<bollCount;i++){
-    
     switch(i){
       case 118: case 99: case 100: case 101:
       case 102: case 82: case 62:  case 42:
