@@ -1,12 +1,13 @@
 int[] bollX = new int[200]; // ボールの静止位置(x座標)を保存する配列
 int[] bollY = new int[200]; // ボールの静止位置(y座標)を保存する配列
 int bollSize = 50; // ボールの直径
+color[] bollColor = new color[200]; // ボールのカラー
 
 boolean debug = false;
 
 void setup(){
-  size(1000, 400); // ウィンドウサイズ設定
-  setBack(); // 背景を設定
+  size(1000, 390); // ウィンドウサイズ設定
+  background(#e6e6ff);
   frameRate(1200);
   noStroke();
 }
@@ -16,7 +17,7 @@ int bollNowX = bollSize/2; // 移動中ボールのx座標
 int bollNowY = 0; // 移動中ボールのy座標
 
 void draw(){
-  setBack(); // 背景を設定
+  background(#e6e6ff);
   
   // 静止ボールの描画
   for(int i=0;i<bollCount;i++){
@@ -37,7 +38,8 @@ void draw(){
         fill(0,0,255);
         break;
       default:
-        fill(255);
+        // fill(111+(int)(random(0, 10)*10), 81+(int)(random(0, 10)*10), 150+(int)(random(0, 10)*10));
+        fill(bollColor[i]);
         break;
     }
     
@@ -48,7 +50,7 @@ void draw(){
     }
       
   }
-  fill(255);
+  fill(40,0,76);
   
   // ボールの位置を変化させて描画
   bollNowY += 5;
@@ -137,12 +139,6 @@ void draw(){
       break;
     }
   }
-}
-
-// 背景
-void setBack(){
-  color c = #e6e6fa;
-  background(red(c), green(c), blue(c));
 }
 
 // 2点の距離を求める
