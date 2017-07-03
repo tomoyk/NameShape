@@ -7,9 +7,10 @@ boolean debug = false;
 
 void setup(){
   size(1000, 390); // ウィンドウサイズ設定
-  background(#e6e6ff);
+  // background(230,230,255);
   frameRate(1200);
   noStroke();
+  bollColor[0] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10));
 }
 
 int bollCount = 0; // 描画した静止しているボール数
@@ -17,7 +18,7 @@ int bollNowX = bollSize/2; // 移動中ボールのx座標
 int bollNowY = 0; // 移動中ボールのy座標
 
 void draw(){
-  background(#e6e6ff);
+  background(230,230,255);
   
   // 静止ボールの描画
   for(int i=0;i<bollCount;i++){
@@ -25,20 +26,23 @@ void draw(){
       case 118: case 99: case 100: case 101:
       case 102: case 82: case 62:  case 42:
       case 41:  case 40: case 59:
+        stroke(255, 0, 0);
         fill(255,0,0);
         break;
       case 124: case 104: case 105: case 106:
       case 107: case 108: case 109: case 86:
       case 89:  case 67:  case 48:
+        stroke(0, 255, 0);
         fill(0,255,0);
         break;
       case 111: case 112: case 113: case 114:
       case 115: case 116: case 95:  case 75:
       case 74:  case 55:
+        stroke(0, 0, 255);
         fill(0,0,255);
         break;
       default:
-        // fill(111+(int)(random(0, 10)*10), 81+(int)(random(0, 10)*10), 150+(int)(random(0, 10)*10));
+        noStroke();
         fill(bollColor[i]);
         break;
     }
@@ -72,7 +76,7 @@ void draw(){
   // 他のボールとの当たり判定
   for(int i=0;i<bollCount;i++){
     
-    if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) < bollSize  ){ // ボールがi番目のボールと触れた時
+    if( distance(bollNowX, bollNowY, bollX[i], bollY[i]) < bollSize ){ // ボールがi番目のボールと触れた時
         
       // 上の円の中心を計算
       float posX = bollNowX;
@@ -132,7 +136,7 @@ void draw(){
       bollHit();
       break;
     }
-    
+        
     if(bollY[i] < bollSize/2){ // ボールが積み上がってウィンドウはみ出たら
       noLoop();
       if(debug) println("End");
@@ -167,6 +171,8 @@ void bollHit(){ // bollNum番目のボールの横の位置
   
   bollNowX = bollSize/2 + (startPoint%widBollMax) * bollSize ;//+ (int)random(0, 5);
   bollNowY = 0;
+  
+  bollColor[bollCount] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10));
 }
 
 void drawBoll(int x, int y, int r, int num){
