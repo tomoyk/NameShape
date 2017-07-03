@@ -3,14 +3,12 @@ int[] bollY = new int[200]; // ボールの静止位置(y座標)を保存する�
 int bollSize = 50; // ボールの直径
 color[] bollColor = new color[200]; // ボールのカラー
 
-boolean debug = false;
+boolean debug = false; // デバッグモードの設定
 
 void setup(){
   size(1000, 390); // ウィンドウサイズ設定
-  // background(230,230,255);
-  frameRate(1200);
-  noStroke();
-  bollColor[0] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10));
+  frameRate(1200); // 1秒間の描画数
+  bollColor[0] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10)); // 1つ目のぼーるの色を初期化
 }
 
 int bollCount = 0; // 描画した静止しているボール数
@@ -18,35 +16,36 @@ int bollNowX = bollSize/2; // 移動中ボールのx座標
 int bollNowY = 0; // 移動中ボールのy座標
 
 void draw(){
-  background(230,230,255);
+  background(230,230,255); // 背景の設定
   
   // 静止ボールの描画
   for(int i=0;i<bollCount;i++){
+    // ボールの枠線と太さを設定
     stroke(255);
     strokeWeight(3);
     
+    // 個別のボールへの設定
     switch(i){
-      case 118: case 99: case 100: case 101:
-      case 102: case 82: case 62:  case 42:
-      case 41:  case 40: case 59:
+      // コの文字
+      case 118: case 99: case 100: case 101: case 102: case 82: case 62:  case 42: case 41:  case 40: case 59:
         fill(120,120,0);
         break;
-      case 124: case 104: case 105: case 106:
-      case 107: case 108: case 109: case 86:
-      case 89:  case 67:  case 48:
+      // ヤの文字
+      case 124: case 104: case 105: case 106: case 107: case 108: case 109: case 86: case 89: case 67: case 48:
         fill(120,0,0);
         break;
-      case 111: case 112: case 113: case 114:
-      case 115: case 116: case 95:  case 75:
-      case 74:  case 55:
+      // マの文字
+      case 111: case 112: case 113: case 114: case 115: case 116: case 95: case 75: case 74: case 55:
         fill(0,120,120);
         break;
+      // それ以外の文字
       default:
         noStroke();
         fill(bollColor[i]);
         break;
     }
     
+    // 描画するオブジェクトをモードで切り替え
     if(!debug) {
       ellipse(bollX[i], bollY[i], bollSize, bollSize);
     }else{
@@ -54,11 +53,14 @@ void draw(){
     }
       
   }
+  
+  // 落下するボールの色
   fill(40,0,76);
   
-  // ボールの位置を変化させて描画
+  // ボールの位置を変化
   bollNowY += 5;
   
+  // 落下するボールを描画
   ellipse(bollNowX, bollNowY, bollSize, bollSize);
   
   // ボールと壁の当たり判定
@@ -169,7 +171,7 @@ void bollHit(){ // bollNum番目のボールの横の位置
     startPoint++;
   }
   
-  bollNowX = bollSize/2 + (startPoint%widBollMax) * bollSize ;//+ (int)random(0, 5);
+  bollNowX = bollSize/2 + (startPoint%widBollMax) * bollSize ;
   bollNowY = 0;
   
   bollColor[bollCount] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10));
