@@ -1,19 +1,20 @@
+boolean debug = false; // デバッグモードの設定
+
 int[] bollX = new int[200]; // ボールの静止位置(x座標)を保存する配列
 int[] bollY = new int[200]; // ボールの静止位置(y座標)を保存する配列
 int bollSize = 50; // ボールの直径
 color[] bollColor = new color[200]; // ボールのカラー
 
-boolean debug = false; // デバッグモードの設定
-
-void setup(){
-  size(1000, 390); // ウィンドウサイズ設定
-  frameRate(1200); // 1秒間の描画数
-  bollColor[0] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10)); // 1つ目のぼーるの色を初期化
-}
-
 int bollCount = 0; // 描画した静止しているボール数
 int bollNowX = bollSize/2; // 移動中ボールのx座標
 int bollNowY = 0; // 移動中ボールのy座標
+int startPoint = 0; // ボールが他の物体に衝突
+
+void setup(){
+  size(1000, 380); // ウィンドウサイズ設定
+  frameRate(1200); // 1秒間の描画数
+  bollColor[0] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10)); // 1つ目のぼーるの色を初期化
+}
 
 void draw(){
   background(230,230,255); // 背景の設定
@@ -103,17 +104,18 @@ void draw(){
         if(debug) println("(xDiff, yDiff)=" + xDiff + ", " + yDiff );
         
         // 動く玉と中心になる玉との角度とって radian を -0.03 する
-        rad = atan( yDiff / xDiff ) - 0.03; // ここ向き:
+        rad = atan( yDiff / xDiff ) - 0.03;
         if(debug) println("rad: " + rad);
         
         // 動く玉の位置を再定義
-        posX = (int)( pX - mode * bollSize * cos(rad) );
-        posY = (int)( pY - bollSize * sin(rad) );
+        posX = pX - mode * bollSize * cos(rad);
+        posY = pY - bollSize * sin(rad);
         if(debug) println("(posX, posY)=" + posX + ", " + posY );
         
+        //
         boolean state = false;
         
-        // ボールの回転
+        // ボールと触れているか判定
         for(int j=0;j<bollCount;j++){
           if(i==j) continue; // 接触している1つ目のボールを除く
           if( distance((int)posX, (int)posY, bollX[j], bollY[j]) < bollSize ){ // ボールがi番目のボールと触れた時
@@ -122,7 +124,7 @@ void draw(){
           }
         }
         
-        // 玉が地面に達したら終了
+        // ボールが地面に達したら終了
         if(state){
           if(debug) println("Over line");
           break;
@@ -134,12 +136,14 @@ void draw(){
         ellipse(bollNowX, bollNowY, bollSize, bollSize);
       }
       
+      // ボールが静止
       if(debug) println("Hit");
       bollHit();
       break;
     }
-        
-    if(bollY[i] < bollSize/2){ // ボールが積み上がってウィンドウはみ出たら
+    
+    // ボールが積み上がってウィンドウはみ出たら
+    if(bollY[i] < bollSize/2){
       noLoop();
       if(debug) println("End");
       break;
@@ -155,28 +159,28 @@ int distance(int x1, int y1, int x2, int y2){
 }
 
 // ボールが他の物体に衝突
-int startPoint = 0;
-
-// ボールが他の物体に衝突
 void bollHit(){ // bollNum番目のボールの横の位置
   startPoint++;
   
+  // 静止ボールを配列に追加
   bollX[bollCount] = bollNowX;
   bollY[bollCount] = bollNowY;
   bollCount++;
 
   int widBollMax = width/bollSize; // 一行に配置できるボールの数
   if( (startPoint/widBollMax)%2==1 && startPoint%widBollMax == widBollMax-1){
-    print("debug:: ");
     startPoint++;
   }
   
-  bollNowX = bollSize/2 + (startPoint%widBollMax) * bollSize ;
+  // ボールの位置を再設定
+  bollNowX = bollSize/2 + (startPoint%widBollMax) * bollSize;
   bollNowY = 0;
   
+  // ボールの色を再設定
   bollColor[bollCount] = color(111+(int)(random(0, 7)*10), 81+(int)(random(3, 10)*10), 150+(int)(random(2, 8)*10));
 }
 
+// 番号付きの数字を描画する関数
 void drawBoll(int x, int y, int r, int num){
   ellipse(x, y, r, r);
   fill(0);
