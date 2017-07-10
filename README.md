@@ -1,10 +1,30 @@
 # NameShape
 Processingでなんか名前を表示させる不毛なやつ
 
-_これをベースに🍣を書いた.
+## Processes
 
-https://emojipedia.org/sushi/ _
+30 %
 
-🍣を使う予定が時間的に厳しいので断念.
+<img src="https://github.com/tomoyk/NameShape/blob/master/images/result_30.png?raw=true" width="320" />
 
-次は🍣を回してみたい.
+60 %
+
+<img src="https://github.com/tomoyk/NameShape/blob/master/images/result_80.png?raw=true" width="320" />
+
+100 %
+
+<img src="https://github.com/tomoyk/NameShape/blob/master/images/result_100.png?raw=true" width="320" />
+
+## Info
+
+NumberBoll
+
+<img src="https://github.com/tomoyk/NameShape/blob/master/images/result-numboll.png?raw=true" width="320" />
+
+arcTan
+
+<img src="https://github.com/tomoyk/NameShape/blob/master/images/result-arc.png?raw=true" width="320" />
+
+## LICENSE
+
+MIT License
