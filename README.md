@@ -23,7 +23,7 @@ NumberBoll
 
 arcTan
 
-<img src="https://github.com/tomoyk/NameShape/blob/master/images/result_arc.png?raw=true" width="420" />
+<img src="https://github.com/tomoyk/NameShape/blob/master/images/arcTan.png?raw=true" width="420" />
 
 ## LICENSE
 
